@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Spa3</title>
+	<style type="text/css">
+		body {
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			background-color: #777;
+		}
+
+		#spa {
+			position: absolute;
+			top: 8px;
+			left: 8px;
+			bottom: 8px;
+			right: 8px;
+			border-radius: 8px 8px 0 8px;
+			background-color: #fff;
+		}
+		
+		.spa-slider {
+			background-color: #f00;
+			position: absolute;
+			right: 2px;
+			bottom: 0;
+			width: 300px;
+			height: 16px;
+			border-radius: 8px 0 0 0;
+			cursor: pointer;
+		}
+	</style>
+	<script src="http://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+	</script>
+	<script type="text/javascript">
+		var spa = (function ($) {
+			var 
+				configMap = {
+					retracted_title: 'click to expand',
+					retracted_height: 16,
+					expanded_title: 'click to retract',
+					expanded_height: 300,
+					template_html: '<div class="spa-slider"></div>'
+				},
+				$sliderContainer,
+				toggerSlider,
+				onClickSlider,
+				initModule;
+
+			toggerSlider = function(){
+				var height = $sliderContainer.height();
+				if (height === configMap.retracted_height) {
+					$sliderContainer.attr('title', configMap.expanded_title)
+					$sliderContainer.height(configMap.expanded_height)
+					return true;
+				}
+				else if (height === configMap.expanded_height) {
+					$sliderContainer.attr('title', configMap.retracted_title)
+					$sliderContainer.height(configMap.retracted_height)
+					return true;
+				}
+				return false;
+			}
+
+			onClickSlider = function($event){
+				toggerSlider();
+				return false;
+			}
+
+			initModule = function($container){
+				$container.html(configMap.template_html);
+				$sliderContainer = $container.find('.spa-slider')
+				$sliderContainer.click(onClickSlider)
+				return true;
+			}
+
+			return { initModule: initModule };
+		}(jQuery));
+
+		jQuery(document).ready(function(){
+			spa.initModule($('#spa'));
+		})
+	</script>
+</head>
+<body>
+	<div id="spa"></div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Spa2</title>
+	<style type="text/css">
+		.spa-slider{
+			position: absolute;
+			background-color: #f00;
+			bottom: 0;
+			right: 2px;
+			height: 16px;
+			width: 300px;
+			cursor: pointer;
+			border-radius: 8px 0 0 0;
+		}
+	</style>
+	<script src="http://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous">
+	</script>
+	<script type="text/javascript">
+		var spa = (function($){
+			var initModule,
+				$chatSlider,
+				toggleSlider,
+				configMap = {
+					retracted_height: 16,
+					retracted_title: 'click to extend',
+					extended_height: 300,
+					extended_title: 'click to retract',
+					html_template: '<div class="spa-slider"></div>'
+				};
+
+			toggleSlider = function(){
+				var height = $chatSlider.height();
+				if(height === configMap.retracted_height){
+					$chatSlider.height(configMap.extended_height);
+					$chatSlider.attr('title', configMap.extended_title);
+					return true;
+				}
+				else if(height === configMap.extended_height){
+					$chatSlider.height(configMap.retracted_height);
+					$chatSlider.attr('title', configMap.retracted_title);
+					return true;
+				}
+				return false;
+			}
+
+			onClickSlider = function($event){
+				toggleSlider();
+				return false;
+			}
+
+
+			initModule = function( $container ){
+				$container.html(configMap.html_template)
+				$chatSlider = $container.find('.spa-slider')
+				$chatSlider.attr('title', configMap.retracted_title)
+					.click(onClickSlider)
+			}
+
+			return { initModule: initModule };
+		}(jQuery));
+
+		jQuery(document).ready(function(){
+			spa.initModule($('#spa'));
+		})
+	</script>
+</head>
+<body>
+<div id="spa">
+</div>
+</body>
+</html>
