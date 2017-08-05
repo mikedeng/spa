@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Spa Starter 5 - 6</title>
+	<link rel="stylesheet" type="text/css" href="css/spa.css">
+	<link rel="stylesheet" type="text/css" href="css/spa.chat.css">
+	<link rel="stylesheet" type="text/css" href="css/spa.avtr.css">
+	<link rel="stylesheet" type="text/css" href="css/spa.shell.css">
+	<!-- Third part js -->
+	<script src="js/jq/taffy.js"></script>
+	<script src="js/jq/jquery-3.2.1.min.js"></script>
+	<script src="js/jq/jquery.uriAnchor.js"></script>
+	<script src="js/jq/jquery.event.gevent.js"></script>
+	<script src="js/jq/jquery.event.ue.js"></script>
+
+	<script src="js/spa.js"></script>
+	<script src="js/spa.util.js"></script>
+	<script src="js/spa.data.js"></script>
+	<script src="js/spa.fake.js"></script>
+	<script src="js/spa.model.js"></script>
+	<script src="js/spa.util_b.js"></script>
+	<script src="js/spa.shell.js"></script>
+	<script src="js/spa.chat.js"></script>
+	<script src="js/spa.avtr.js"></script>
+
+	<script type="text/javascript">
+		$(function () {
+			spa.initModule($('#spa'))
+		})
+
+		$('body').append('<div id="spa-chat-list-box"/>');
+
+		var $listbox = $('#spa-chat-list-box');
+		$listbox.css({
+			position: 'absolute', 'z-index': 3,
+			top: 50, left: 50, width: 50, height: 50,
+			border: '2px solid black', background: '#fff'
+		});
+
+		var onListChange = function(event, update_map){
+			$(this).html(update_map.list_text);
+			alert('onListChange ran')
+		}
+
+		$.gevent.subscribe($listbox, 'spa-listchange', onListChange);
+		$.gevent.publish('spa-listchange', [{list_text: 'the list is here'}])
+		$listbox.remove();
+		$.gevent.publish('spa-listchange', [{}]);
+	</script>
+</head>
+<body>
+	<div id="spa"></div>
+</body>
+</html>
