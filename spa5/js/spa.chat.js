@@ -8,6 +8,7 @@
 /*global $, spa */
 
 spa.chat = (function () {
+	'use strict'
 	var configMap = {
 			main_html: '<div class="spa-chat">'
 					+'	<div class="spa-chat-head">'
@@ -65,7 +66,8 @@ spa.chat = (function () {
 		configModule,
 		initModule,
 		removeSlider,
-		handleResize
+		handleResize,
+		setPxSizes
 	;
 
 	getEmSize = function( elem ){
