@@ -58,7 +58,7 @@ spa.model = (function () {
 					chatee = person;
 				}
 
-				makePerson( make_person_map );
+				// makePerson( make_person_map );
 			}
 
 			stateMap.people_db.sort('name');
